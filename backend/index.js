@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
+
+const authRouter = require('./routes/auth');
+const userRouter = require('./routes/user');
 
 dotenv.config();
 
@@ -14,9 +16,14 @@ mongoose.connect((process.env.MONGODB_URL), () => {
     console.log("Connect to Mongoose");
 })
 
-app.use(bodyParser.json({limit: "50mb"}));
 app.use(cors());
-app.use(morgan("common"));
+app.use(express.json());
+app.use(cookieParser());
+
+
+//ROUTES
+app.use('/v1/auth', authRouter)
+app.use('/v1/user', userRouter);
 
 
 app.listen(8080, () => {
