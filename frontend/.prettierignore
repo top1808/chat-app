@@ -1,0 +1,6 @@
+# Ignore :
+build
+.next
+node_modules
+.gitlab
+.gitlab-ci.yml
